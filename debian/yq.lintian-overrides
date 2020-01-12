@@ -1,0 +1,3 @@
+yq binary: statically-linked-binary usr/bin/yq
+yq binary: binary-without-manpage
+

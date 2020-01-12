@@ -1,0 +1,38 @@
+FROM golang:1.13 as builder
+
+WORKDIR /go/src/mikefarah/yq
+
+# cache devtools
+COPY ./scripts/devtools.sh /go/src/mikefarah/yq/scripts/devtools.sh
+RUN ./scripts/devtools.sh
+
+COPY . /go/src/mikefarah/yq
+
+RUN CGO_ENABLED=0 make local build
+
+FROM debian:buster-slim as debianbuilder
+WORKDIR /build
+COPY --from=builder /go/src/mikefarah/yq/yq .
+COPY --from=builder /go/src/mikefarah/yq/LICENSE .
+COPY --from=builder /go/src/mikefarah/yq/README.md .
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install -y \
+    build-essential \
+    debhelper \
+    lintian
+COPY debian debian
+RUN dpkg-buildpackage --no-sign
+WORKDIR /
+RUN lintian *.deb
+
+FROM debian:buster-slim as production
+COPY --from=debianbuilder *.deb /
+WORKDIR /
+RUN ls *.deb
+RUN dpkg-deb -c *.deb
+RUN dpkg --install *.deb
+# allow for:
+# docker build -t yd-debian -f Dockerfile.debian .
+# docker run yd-debian > yd-2.4.1~dockerbuild1.deb
+ENTRYPOINT ["sh", "-c", "cat *.deb"]

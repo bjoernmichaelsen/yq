@@ -1,31 +1,5 @@
-yq (2.2-1) bionic; urgency=medium
+yq (2.4.1~dockerbuild1) buster; urgency=medium
 
-  * Added Windows support for the "--inplace" command flag
-  * Prefix now supports arrays
-  * Add prefix command
-  * Bump Alpine version to 3.8
-  * Improved docker build process
-  * Lint fixes
-  * Build support for all linux architectures supported by gox
+  * minimal binary build in docker
 
- -- Roberto Mier Escandon <rmescandon@gmail.com>  Sat, 19 Jan 2019 15:50:47 +0100
-
-yq (2.1-0) bionic; urgency=medium
-
-  * Ability to read multiple documents in a single file
-  * Ability to append list items instead of overwriting
-
- -- Roberto Mier Escandón <rmescandon@gmail.com>  Tue, 10 Jul 2018 14:02:42 +0200
-
-yq (2.0-0) bionic; urgency=medium
-
-  * Release 2.0.0
-
- -- Roberto Mier Escandón <rmescandon@gmail.com>  Wed, 20 Jun 2018 10:29:53 +0200
-
-yq (1.15-0) bionic; urgency=medium
-
-  * Release 1.15
-
- -- Roberto Mier Escandón <rmescandon@gmail.com>  Wed, 06 Jun 2018 11:32:03 +0200
-
+ -- Bjoern Michaelsen <bjoern.michaelsen@libreoffice.org>  Sun, 12 Jan 2020 12:04:23 +0100
